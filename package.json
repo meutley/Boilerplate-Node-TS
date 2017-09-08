@@ -1,0 +1,26 @@
+{
+  "name": "boilerplate-node-ts",
+  "version": "1.0.0",
+  "description": "A boilerplate template using node.js, express and TypeScript.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build-dev": "call ./node_modules/.bin/tsc.cmd",
+    "start-dev": "npm run build-dev && node ./dist/index.js",
+    "watch-dev": "nodemon -e ts -w ./src -x npm run start-dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.37",
+    "@types/node": "^8.0.26",
+    "nodemon": "^1.11.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.5.2"
+  }
+}

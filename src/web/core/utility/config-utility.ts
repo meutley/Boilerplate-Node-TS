@@ -1,7 +1,7 @@
 import { Config, ConfigFactory, Environment } from '../../config';
 
-const getEnvironment = (environment: NodeJS.ProcessEnv): Environment => {
-    switch (environment.key) {
+const getEnvironment = (environment: string): Environment => {
+    switch (environment) {
         case 'Local':
             return Environment.Local;
         case 'Debug':
@@ -15,7 +15,7 @@ const getEnvironment = (environment: NodeJS.ProcessEnv): Environment => {
     }
 }
 
-export const getConfig = (environment: NodeJS.ProcessEnv): Config => {
+export const getConfig = (environment: string): Config => {
     let env: Environment = getEnvironment(environment);
     return ConfigFactory.getEnvironmentConfig(env);
 }

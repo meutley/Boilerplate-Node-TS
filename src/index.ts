@@ -7,7 +7,8 @@ import * as Web from './web';
 import * as Api from './web/api';
 
 // Server dependencies
-const config = Utility.Config.getConfig(process.env);
+const defaultEnvironment = 'Local';
+const config = Utility.Config.getConfig(process.env.key || defaultEnvironment);
 
 const routeConfigService = new RouteConfigService();
 

@@ -1,4 +1,6 @@
 // General imports
+import { ConsoleWriter } from './web/core/abstraction';
+import { ILogger, ConsoleLogger } from './web/core/logger';
 import { RouteConfigService } from './web/core/routing/route-config-service';
 import { Utility } from './web/core/utility';
 
@@ -9,10 +11,12 @@ import * as Api from './web/api';
 // Server dependencies
 const defaultEnvironment = 'Local';
 const config = Utility.Config.getConfig(process.env.key || defaultEnvironment);
+const consoleWriter = new ConsoleWriter();
+const logger = new ConsoleLogger(consoleWriter, config);
 
 const routeConfigService = new RouteConfigService();
 
 // Initialize and start the server
-const server = new Web.Server(config, routeConfigService);
+const server = new Web.Server(config, logger, routeConfigService);
 server.configureRouters(Api.Routers);
 server.start();

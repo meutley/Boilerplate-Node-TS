@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import * as express from 'express';
 
+import { Config } from '../../config';
 import { IRouteConfigService } from './route-config-service.interface';
 import { RouteConfig } from './route-config';
 import { Route } from './route';

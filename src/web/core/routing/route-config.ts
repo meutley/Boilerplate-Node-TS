@@ -1,6 +1,9 @@
+import * as express from 'express';
+
 import { HttpVerb } from '../http-verb';
 import { Route } from './route';
 import { IRouteHandler } from './route-handler';
+import { ApplicationState } from '../../application-state';
 
 export class RouteConfig {
     private _mountPath: string;
@@ -34,5 +37,10 @@ export class RouteConfig {
     private addRoute(httpVerb: HttpVerb, path: string, handler: IRouteHandler) {
         const route = new Route(httpVerb, path, handler);
         this._routes.push(route);
+    }
+
+    static getJwtToken(request: express.Request): string {
+        let token = request.headers[ApplicationState.config.authentication.headerName];
+        return token.toString();
     }
 }

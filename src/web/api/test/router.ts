@@ -1,6 +1,5 @@
 import * as express from 'express';
 
-import { HttpVerb } from '../../core/http-verb';
 import { RouteConfig } from '../../core/routing';
 
 const routeConfig = new RouteConfig('/api/test');

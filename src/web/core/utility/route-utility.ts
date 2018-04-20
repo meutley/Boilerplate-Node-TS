@@ -1,9 +1,15 @@
 import * as express from 'express';
 
+import { Config } from '../../config';
 import { HttpVerb } from '../http-verb';
 import { IRouteHandler } from '../routing';
 
-export const setupHandler = (app: express.Application, httpVerb: HttpVerb, path: string, handler: IRouteHandler): any => {
+export const setupHandler =
+    (app: express.Application,
+        httpVerb: HttpVerb,
+        path: string, handler:
+        IRouteHandler,
+        config?: Config): any => {
     switch (httpVerb) {
         case HttpVerb.Get:
             app.get(path, handler);

@@ -1,5 +1,7 @@
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 
+import { ApplicationState } from './application-state';
 import { Config } from './config';
 import { ILogger } from './core/logger';
 import { IRouteConfigService, RouteConfig } from './core/routing';
@@ -16,6 +18,10 @@ export class Server {
         this._config = config;
         this._logger = logger;
         this._routeConfigService = routeConfigService;
+
+        ApplicationState.config = this._config;
+
+        this.configureMiddleware();
     }
 
     configureRouter(router: RouteConfig) {
@@ -30,6 +36,11 @@ export class Server {
         this._app.listen(this._config.server.listeningPort, () => {
             this.onStarted();
         });
+    }
+
+    private configureMiddleware() {
+        this._app.use(bodyParser.urlencoded({ extended: false }));
+        this._app.use(bodyParser.json());
     }
 
     private onStarted() {

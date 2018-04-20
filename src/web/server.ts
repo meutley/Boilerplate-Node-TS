@@ -13,6 +13,10 @@ export class Server {
     private _logger: ILogger = null;
     private _routeConfigService: IRouteConfigService = null;
 
+    public get ExpressApp(): express.Application {
+        return this._app;
+    }
+
     constructor(config: Config, logger: ILogger, routeConfigService: IRouteConfigService) {
         this._app = express();
         this._config = config;

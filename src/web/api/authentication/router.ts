@@ -4,6 +4,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { ApplicationState } from '../../application-state';
 import { RouteConfig } from '../../core/routing';
+import { ResponseUtility } from '../../core/utility/response-utility';
 
 const routeConfig = new RouteConfig('/api/authentication');
 
@@ -15,12 +16,18 @@ routeConfig.post('/register',
             throw new Error("config is required for authentication routes");
         }
         
+        if (!request.body.username) {
+            ResponseUtility.badRequest(response, {
+                message: "Username is required"
+            });
+
+            return;
+        }
+        
         if (!request.body.password) {
-            response
-                .status(400)
-                .send({
-                    message: "Password is required"
-                });
+            ResponseUtility.badRequest(response, {
+                message: "Password is required"
+            });
 
             return;
         }
@@ -34,12 +41,10 @@ routeConfig.post('/register',
             expiresIn: config.authentication.expirationSeconds
         });
 
-        response
-            .status(200)
-            .send({
-                authenticated: true,
-                token: token
-            });
+        ResponseUtility.ok(response, {
+            authenticated: true,
+            token: token
+        });
     }
 );
 
@@ -53,18 +58,14 @@ routeConfig.post('/login',
 
         // try to find user
         /* if user not found...
-        response
-            .status(401)
-            .send('Invalid username/password');
+        ResponseUtility.unauthorized(response, "Invalid username/password");
         return;
         */
 
         /* compare password...
         var passwordMatches = bcrypt.compareSync(request.body.password, user.password);
         if (!passwordMatches) {
-            response
-                .status(401)
-                .send('Invalid username/password');
+            ResponseUtility.unauthorized(response, "Invalid username/password");
             return;
         }
         */
@@ -76,12 +77,10 @@ routeConfig.post('/login',
             expiresIn: config.authentication.expirationSeconds
         });
 
-        response
-            .status(200)
-            .send({
-                authenticated: true,
-                token: token
-            });
+        ResponseUtility.ok(response, {
+            authenticated: true,
+            token: token
+        });
     }
 );
 
@@ -95,29 +94,25 @@ routeConfig.post('/test-auth',
 
         const token = RouteConfig.getJwtToken(request);
         if (!token) {
-            response
-                .status(401)
-                .send({
-                    authenticated: false,
-                    message: "Token is required"
-                });
+            ResponseUtility.unauthorized(response, {
+                authenticated: false,
+                message: "Token is required"
+            });
+
+            return;
         }
 
         jwt.verify(token, config.authentication.secret, (err, decoded) => {
             if (err) {
-                response
-                    .status(500)
-                    .send({
-                        authenticated: false,
-                        message: "Could not verify token"
-                    });
+                ResponseUtility.serverError(response, {
+                    authenticated: false,
+                    message: "Could not verify token"
+                });
 
                 return;
             }
 
-            response
-                .status(200)
-                .send(decoded);
+            ResponseUtility.ok(response, decoded);
         });
     }
 );

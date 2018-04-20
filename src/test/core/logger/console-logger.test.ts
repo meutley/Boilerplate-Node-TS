@@ -12,10 +12,7 @@ const Configs = {
     nonDebug: <Config>{ debug: false }
 };
 
-let _consoleWriterMock = <IConsoleWriter>{
-    write: () => {}
-};
-
+let _consoleWriterMock = null;
 let _writeStub = null;
 let _logger = null;
 

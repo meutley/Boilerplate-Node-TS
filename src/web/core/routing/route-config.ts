@@ -34,13 +34,13 @@ export class RouteConfig {
         this.addRoute(HttpVerb.Put, path, handler);
     }
 
-    private addRoute(httpVerb: HttpVerb, path: string, handler: IRouteHandler) {
-        const route = new Route(httpVerb, path, handler);
-        this._routes.push(route);
-    }
-
     static getJwtToken(request: express.Request): string {
         let token = request.headers[ApplicationState.config.authentication.headerName];
         return token.toString();
+    }
+    
+    private addRoute(httpVerb: HttpVerb, path: string, handler: IRouteHandler) {
+        const route = new Route(httpVerb, path, handler);
+        this._routes.push(route);
     }
 }

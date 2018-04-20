@@ -15,7 +15,17 @@ routeConfig.post('/register',
             throw new Error("config is required for authentication routes");
         }
         
-        var hashedPassword = bcrypt.hashSync("request.body.password", 8);
+        if (!request.body.password) {
+            response
+                .status(400)
+                .send({
+                    message: "Password is required"
+                });
+
+            return;
+        }
+        
+        var hashedPassword = bcrypt.hashSync(request.body.password, 8);
 
         // create user
 

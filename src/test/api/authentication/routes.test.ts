@@ -20,12 +20,13 @@ const config = Utility.Config.getConfig("Debug");
 const consoleWriter = new ConsoleWriter();
 const logger = new ConsoleLogger(consoleWriter, config);
 const routeConfigService = new RouteConfigService();
-let server: Server = new Server(config, logger, routeConfigService);
+let server: Server;
 
 // Constants
 const RegisterApi = "/api/authentication/register";
 
 before(() => {
+    server = new Server(config, logger, routeConfigService);
     server.configureRouter(Router);
 });
 

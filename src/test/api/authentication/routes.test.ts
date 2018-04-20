@@ -15,20 +15,24 @@ import { ConsoleLogger } from "../../../web/core/logger";
 import { ConsoleWriter } from "../../../web/core/abstraction";
 import { RouteConfigService } from "../../../web/core/routing/route-config-service";
 
+// Build test objects
 const config = Utility.Config.getConfig("Debug");
 const consoleWriter = new ConsoleWriter();
 const logger = new ConsoleLogger(consoleWriter, config);
 const routeConfigService = new RouteConfigService();
 let server: Server = new Server(config, logger, routeConfigService);
 
+// Constants
+const RegisterApi = "/api/authentication/register";
+
 before(() => {
     server.configureRouter(Router);
 });
 
-describe("AuthenticationApi", () => {
-    it("should return 200 when POST /register with username and password", (done) => {
+describe("Authentication API /register", () => {
+    it("should return 200 when POST with username and password", (done) => {
         var result = request(server.ExpressApp)
-            .post("/api/authentication/register")
+            .post(RegisterApi)
             .send({
                 username: "TEST_USER@COMPANY.COM",
                 password: "TEST_P@SSW0RD!"
@@ -47,9 +51,9 @@ describe("AuthenticationApi", () => {
             });
     });
 
-    it("should return 400 when POST /register without username", (done) => {
+    it("should return 400 when POST without username", (done) => {
         var result = request(server.ExpressApp)
-            .post("/api/authentication/register")
+            .post(RegisterApi)
             .expect(400)
             .end((err, res) => {
                 if (err) throw err;
@@ -62,9 +66,9 @@ describe("AuthenticationApi", () => {
             });
     });
     
-    it("should return 400 when POST /register without password", (done) => {
+    it("should return 400 when POST without password", (done) => {
         var result = request(server.ExpressApp)
-            .post("/api/authentication/register")
+            .post(RegisterApi)
             .send({
                 username: "TEST_USER@COMPANY.COM"
             })

@@ -1,8 +1,8 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { Config } from '../../config';
-import { HttpVerb } from '../http-verb';
-import { IRouteHandler } from '../routing';
+import { Config } from "../../config";
+import { HttpVerb } from "../http-verb";
+import { IRouteHandler } from "../routing";
 
 export const setupHandler =
     (app: express.Application,

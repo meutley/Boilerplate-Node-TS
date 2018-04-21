@@ -1,5 +1,5 @@
-import { IRouteHandler } from './route-handler';
-import { HttpVerb } from '../http-verb';
+import { IRouteHandler } from "./route-handler";
+import { HttpVerb } from "../http-verb";
 
 export class Route {
     private _httpVerb: HttpVerb;

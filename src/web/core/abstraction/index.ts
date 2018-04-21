@@ -1,2 +1,2 @@
-export { IConsoleWriter } from './console-writer.interface';
-export { ConsoleWriter } from './console-writer';
+export { IConsoleWriter } from "./console-writer.interface";
+export { ConsoleWriter } from "./console-writer";

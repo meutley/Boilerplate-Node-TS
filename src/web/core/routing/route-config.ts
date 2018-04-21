@@ -1,9 +1,9 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { HttpVerb } from '../http-verb';
-import { Route } from './route';
-import { IRouteHandler } from './route-handler';
-import { ApplicationState } from '../../application-state';
+import { HttpVerb } from "../http-verb";
+import { Route } from "./route";
+import { IRouteHandler } from "./route-handler";
+import { ApplicationState } from "../../application-state";
 
 export class RouteConfig {
     private _mountPath: string;
@@ -18,7 +18,7 @@ export class RouteConfig {
     }
     
     constructor(mountPath: string, routes?: Route[]) {
-        this._mountPath = mountPath || '/';
+        this._mountPath = mountPath || "/";
         this._routes = routes || [];
     }
 

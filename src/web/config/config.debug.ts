@@ -1,5 +1,5 @@
-import { BaseConfig } from './config';
-import { Environment } from './environment';
+import { BaseConfig } from "./config";
+import { Environment } from "./environment";
 
 const _config = Object.assign({}, BaseConfig);
 

@@ -1,14 +1,14 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { RouteConfig } from '../../core/routing';
+import { RouteConfig } from "../../core/routing";
 
-const routeConfig = new RouteConfig('/api/test');
+const routeConfig = new RouteConfig("/api/test");
 
 // GET /api/test
-routeConfig.get('',
+routeConfig.get("",
     (request: express.Request, response: express.Response) => {
         response.send({
-            key: 'abc',
+            key: "abc",
             value: 123
         });
     }

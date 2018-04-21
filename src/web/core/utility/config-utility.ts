@@ -1,14 +1,14 @@
-import { Config, ConfigFactory, Environment } from '../../config';
+import { Config, ConfigFactory, Environment } from "../../config";
 
 const getEnvironment = (environment: string): Environment => {
     switch (environment) {
-        case 'Local':
+        case "Local":
             return Environment.Local;
-        case 'Debug':
+        case "Debug":
             return Environment.Debug;
-        case 'Qa':
+        case "Qa":
             return Environment.Qa;
-        case 'Production':
+        case "Production":
             return Environment.Production;
         default:
             return Environment.Local;

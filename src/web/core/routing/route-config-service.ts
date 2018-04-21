@@ -1,10 +1,10 @@
-import * as _ from 'lodash';
-import * as express from 'express';
+import * as _ from "lodash";
+import * as express from "express";
 
-import { IRouteConfigService } from './route-config-service.interface';
-import { RouteConfig } from './route-config';
-import { Route } from './route';
-import { Utility } from '../utility';
+import { IRouteConfigService } from "./route-config-service.interface";
+import { RouteConfig } from "./route-config";
+import { Route } from "./route";
+import { Utility } from "../utility";
 
 export class RouteConfigService implements IRouteConfigService {
     configureRouter(app: express.Application, router: RouteConfig) {
@@ -21,7 +21,7 @@ export class RouteConfigService implements IRouteConfigService {
     private configureRoutes(app: express.Application, rootPath: string, routes: Route[]) {
         _.each(routes, (route: Route) => {
             // Set up the route/handler
-            const path = '/' + Utility.Url.combineParts([rootPath, route.path]);
+            const path = "/" + Utility.Url.combineParts([rootPath, route.path]);
             Utility.Route.setupHandler(app, route.httpVerb, path, route.handler);
         });
     }

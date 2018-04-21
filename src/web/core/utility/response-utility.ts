@@ -1,6 +1,6 @@
-import * as express from 'express';
+import * as express from "express";
 
-import { HttpStatusCodes } from '../http-status-codes';
+import { HttpStatusCodes } from "../http-status-codes";
 
 export class ResponseUtility {
     static ok(response: express.Response, responseBody?: any): express.Response {

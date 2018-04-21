@@ -1,4 +1,4 @@
-import { IConsoleWriter } from './console-writer.interface';
+import { IConsoleWriter } from "./console-writer.interface";
 
 export class ConsoleWriter implements IConsoleWriter {
     write(obj: any, ...optionalParams: any[]) {

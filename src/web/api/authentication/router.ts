@@ -1,15 +1,15 @@
-import * as express from 'express';
-import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcryptjs';
+import * as express from "express";
+import * as jwt from "jsonwebtoken";
+import * as bcrypt from "bcryptjs";
 
-import { ApplicationState } from '../../application-state';
-import { RouteConfig } from '../../core/routing';
-import { ResponseUtility } from '../../core/utility/response-utility';
+import { ApplicationState } from "../../application-state";
+import { RouteConfig } from "../../core/routing";
+import { ResponseUtility } from "../../core/utility/response-utility";
 
-const routeConfig = new RouteConfig('/api/authentication');
+const routeConfig = new RouteConfig("/api/authentication");
 
 // POST /api/authentication/register
-routeConfig.post('/register',
+routeConfig.post("/register",
     (request: express.Request, response: express.Response) => {
         const config = ApplicationState.config;
         if (!config) {
@@ -49,7 +49,7 @@ routeConfig.post('/register',
 );
 
 // POST /api/authentication/login
-routeConfig.post('/login',
+routeConfig.post("/login",
     (request: express.Request, response: express.Response) => {
         const config = ApplicationState.config;
         if (!config) {
@@ -85,7 +85,7 @@ routeConfig.post('/login',
 );
 
 // GET /api/authentication/test-auth
-routeConfig.post('/test-auth',
+routeConfig.post("/test-auth",
     (request: express.Request, response: express.Response) => {
         const config = ApplicationState.config;
         if (!config) {

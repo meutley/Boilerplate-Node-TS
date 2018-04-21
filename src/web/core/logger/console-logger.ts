@@ -1,6 +1,6 @@
-import { Config } from '../../config';
-import { IConsoleWriter } from '../abstraction/console-writer.interface';
-import { ILogger } from './logger.interface';
+import { Config } from "../../config";
+import { IConsoleWriter } from "../abstraction/console-writer.interface";
+import { ILogger } from "./logger.interface";
 
 export class ConsoleLogger implements ILogger {
     private _consoleWriter: IConsoleWriter;

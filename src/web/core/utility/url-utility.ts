@@ -1,3 +1,3 @@
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
-export const combineParts = (parts: string[]) => parts.map((s) => _.trim(s, '/')).join('/');
+export const combineParts = (parts: string[]) => parts.map((s) => _.trim(s, "/")).join("/");

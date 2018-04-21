@@ -4,7 +4,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 
 import { ApplicationState } from "./application-state";
-import { Config } from "./config";
+import { Config, Features } from "./config";
 import { ILogger } from "./core/logger";
 import { IRouteConfigService, RouteConfig } from "./core/routing";
 import { Utility } from "./core/utility";
@@ -37,30 +37,40 @@ export class Server {
     }
 
     configureApiRouter(router: RouteConfig) {
-        this._routeConfigService.configureRouter(this._app, router);
+        if (this._config.getFeature(Features.Api).isEnabled === true) {
+            this._routeConfigService.configureRouter(this._app, router);
+        }
     }
 
     configureApiRouters(routers: RouteConfig[]) {
-        this._routeConfigService.configureRouters(this._app, routers);
+        if (this._config.getFeature(Features.Api).isEnabled === true) {
+            this._routeConfigService.configureRouters(this._app, routers);
+        }
     }
 
     configureController(controller: BaseController) {
-        const found = _.filter((c) => c.name.toUpperCase() === controller.controllerName.toUpperCase());
-        if (found && found.length > 0) {
-            throw new Error(`A controller with the name ${controller.controllerName} has already been registered`);
-        } else {
-            this._controllers.push(controller);
+        if (this._config.getFeature(Features.WebEndpoints).isEnabled === true) {
+            const found = _.filter((c) => c.name.toUpperCase() === controller.controllerName.toUpperCase());
+            if (found && found.length > 0) {
+                throw new Error(`A controller with the name ${controller.controllerName} has already been registered`);
+            } else {
+                this._controllers.push(controller);
+            }
         }
     }
 
     configureControllers(controllers: BaseController[]) {
-        _.forEach(controllers, (controller) => {
-            this.configureController(controller);
-        });
+        if (this._config.getFeature(Features.WebEndpoints).isEnabled === true) {
+            _.forEach(controllers, (controller) => {
+                this.configureController(controller);
+            });
+        }
     }
 
     finalize() {
-        DefaultRouteHandler.configureDefaultRouteHandler(this._app, this._controllers);
+        if (this._config.getFeature(Features.WebEndpoints).isEnabled === true) {
+            DefaultRouteHandler.configureDefaultRouteHandler(this._app, this._controllers);
+        }
     }
     
     start() {

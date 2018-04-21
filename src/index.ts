@@ -30,7 +30,7 @@ const routeConfigService = new RouteConfigService();
 
 // Initialize and start the server
 const server = new Web.Server(config, logger, routeConfigService);
-server.configureApiRouters(Api.Routers);
+Api.configure(server);
 Controllers.configure(server);
 server.finalize();
 server.start();

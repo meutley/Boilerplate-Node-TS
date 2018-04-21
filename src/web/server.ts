@@ -50,7 +50,6 @@ export class Server {
             throw new Error(`A controller with the name ${controller.controllerName} has already been registered`);
         } else {
             this._controllers.push(controller);
-            ApplicationState.controllers.push(controller);
         }
     }
 

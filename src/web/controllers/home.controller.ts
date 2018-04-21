@@ -8,6 +8,8 @@ export class HomeController extends BaseController {
     }
 
     getIndex = (request: express.Request, response: express.Response) => {
-        response.render(super.getViewPath("index"));
+        response.render(super.getViewPath("index"), {
+            name: request.query.name || "No Name"
+        });
     }
 }

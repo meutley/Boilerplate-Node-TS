@@ -22,6 +22,7 @@ let server: Server;
 
 // Constants
 const EmptyPath = "/";
+const EmptyPathWithQuery = "/?name=TEST+NAME";
 const HomePath = "/home";
 const HomeIndexPath = "/home/index";
 const NotFoundPath = "/home/not-found";
@@ -41,7 +42,21 @@ describe("HomeController", () => {
                 if (err) throw err;
 
                 assert.isDefined(res.text);
-                assert.isTrue(res.text.indexOf("<h1>Home</h1>") >= 0);
+                assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
+
+                done();
+            });
+    });
+
+    it("should return 200 and render Home/Index HTML with name when GET /?name=TEST+NAME", (done) => {
+        request(server.ExpressApp)
+            .get(EmptyPathWithQuery)
+            .expect(200)
+            .end((err, res) => {
+                if (err) throw err;
+
+                assert.isDefined(res.text);
+                assert.isTrue(res.text.indexOf("<h1>Home - TEST NAME</h1>") >= 0);
 
                 done();
             });
@@ -55,7 +70,7 @@ describe("HomeController", () => {
                 if (err) throw err;
 
                 assert.isDefined(res.text);
-                assert.isTrue(res.text.indexOf("<h1>Home</h1>") >= 0);
+                assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
 
                 done();
             });
@@ -69,7 +84,7 @@ describe("HomeController", () => {
                 if (err) throw err;
 
                 assert.isDefined(res.text);
-                assert.isTrue(res.text.indexOf("<h1>Home</h1>") >= 0);
+                assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
 
                 done();
             });

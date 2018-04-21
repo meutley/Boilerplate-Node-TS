@@ -15,20 +15,25 @@ export class ResponseUtility {
         return this.buildResponse(HttpStatusCodes.unauthorized, response, responseBody);
     }
 
+    static notFound(response: express.Response, responseBody?: any): express.Response {
+        return this.buildResponse(HttpStatusCodes.notFound, response, responseBody);
+    }
+
     static serverError(response: express.Response, responseBody?: any): express.Response {
         return this.buildResponse(HttpStatusCodes.serverError, response, responseBody);
     }
 
     private static buildResponse(httpStatusCode: number, response: express.Response, responseBody?: any): express.Response {
-        let obj = response.status(httpStatusCode);
-        return this.addResponseBody(response, responseBody);
+        return responseBody
+            ? response.status(httpStatusCode).send(responseBody)
+            : response.sendStatus(httpStatusCode);
     }
 
     private static addResponseBody(response: express.Response, responseBody?: any): express.Response {
         if (responseBody) {
             return response.send(responseBody);
         } else {
-            response.end();
+            response.send();
         }
     }
 }

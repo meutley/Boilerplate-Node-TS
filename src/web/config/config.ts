@@ -1,4 +1,4 @@
-import { Environment } from './environment';
+import { Environment } from "./environment";
 
 class Server {
     listeningPort: number;
@@ -12,18 +12,30 @@ class Authentication {
     secret: string;
     expirationSeconds: Number;
     headerName: string;
-} 
+}
+
+class ViewEngine {
+    name: string;
+    rootPath: string;
+
+    constructor() {
+        this.name = "ejs";
+        this.rootPath = "views";
+    }
+}
 
 export class Config {
     debug: boolean = false;
     environment: Environment;
     authentication: Authentication;
+    viewEngine: ViewEngine;
 
     server: Server;
 
     constructor() {
         this.server = new Server(3000);
         this.authentication = new Authentication();
+        this.viewEngine = new ViewEngine();
     }
 }
 
@@ -41,6 +53,6 @@ baseConfig.authentication.expirationSeconds = 86400;
    CONFIGURATION FILE.
    ============================================== */
 baseConfig.authentication.secret = "DEMO_SECRET";
-baseConfig.authentication.headerName = 'X-AUTH-TOKEN';
+baseConfig.authentication.headerName = "X-AUTH-TOKEN";
 
 export const BaseConfig = baseConfig;

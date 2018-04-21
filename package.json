@@ -4,10 +4,11 @@
   "description": "A boilerplate template using node.js, express and TypeScript.",
   "main": "dist/index.js",
   "scripts": {
+    "html": "copyfiles --up 1 ./src/views/**/*.ejs dist/",
     "build-dev": "./node_modules/.bin/tsc",
-    "start-dev": "npm run build-dev && node ./dist/index.js",
+    "start-dev": "npm run build-dev && npm run html && node ./dist/index.js",
     "watch-dev": "nodemon -e ts -w ./src -x npm run start-dev",
-    "test": "mocha -r ts-node/register ./src/test/**/*.ts"
+    "test": "mocha -r ts-node/register './src/test/**/*.ts'"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "@types/node": "^8.0.26",
     "@types/sinon": "^2.3.3",
     "chai": "^4.1.2",
+    "copyfiles": "^2.0.0",
     "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
     "sinon": "^3.2.1",

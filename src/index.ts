@@ -7,6 +7,7 @@ import { Utility } from './web/core/utility';
 // Web and API
 import * as Web from './web';
 import * as Api from './web/api';
+import * as Controllers from "./web/controllers";
 
 // Server dependencies
 const defaultEnvironment = 'Local';
@@ -18,5 +19,11 @@ const routeConfigService = new RouteConfigService();
 
 // Initialize and start the server
 const server = new Web.Server(config, logger, routeConfigService);
-server.configureRouters(Api.Routers);
+const controllers = [
+    new Controllers.HomeController(server.ExpressApp, "Home")
+];
+
+server.configureApiRouters(Api.Routers);
+server.configureControllers(controllers);
+server.finalize();
 server.start();

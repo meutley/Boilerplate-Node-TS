@@ -27,12 +27,12 @@ const RegisterApi = "/api/authentication/register";
 
 before(() => {
     server = new Server(config, logger, routeConfigService);
-    server.configureRouter(Router);
+    server.configureApiRouter(Router);
 });
 
 describe("Authentication API /register", () => {
     it("should return 200 when POST with username and password", (done) => {
-        var result = request(server.ExpressApp)
+        request(server.ExpressApp)
             .post(RegisterApi)
             .send({
                 username: "TEST_USER@COMPANY.COM",
@@ -53,7 +53,7 @@ describe("Authentication API /register", () => {
     });
 
     it("should return 400 when POST without username", (done) => {
-        var result = request(server.ExpressApp)
+        request(server.ExpressApp)
             .post(RegisterApi)
             .expect(400)
             .end((err, res) => {
@@ -68,7 +68,7 @@ describe("Authentication API /register", () => {
     });
     
     it("should return 400 when POST without password", (done) => {
-        var result = request(server.ExpressApp)
+        request(server.ExpressApp)
             .post(RegisterApi)
             .send({
                 username: "TEST_USER@COMPANY.COM"

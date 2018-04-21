@@ -1,5 +1,7 @@
-import { Config } from './config';
+import { Config } from "./config";
+import { BaseController } from "./controllers/base.controller";
 
 export const ApplicationState = {
-    config: new Config()
+    config: new Config(),
+    controllers: []
 };

@@ -4,7 +4,7 @@
   "description": "A boilerplate template using node.js, express and TypeScript.",
   "main": "dist/index.js",
   "scripts": {
-    "html": "copyfiles --up 1 ./src/views/**/*.ejs dist/",
+    "html": "copyfiles --up 1 src/**/*.ejs dist/",
     "build-dev": "./node_modules/.bin/tsc",
     "start-dev": "npm run build-dev && npm run html && node ./dist/index.js",
     "watch-dev": "nodemon -e ts -w ./src -x npm run start-dev",

@@ -19,11 +19,7 @@ const routeConfigService = new RouteConfigService();
 
 // Initialize and start the server
 const server = new Web.Server(config, logger, routeConfigService);
-const controllers = [
-    new Controllers.HomeController(server.ExpressApp, "Home")
-];
-
 server.configureApiRouters(Api.Routers);
-server.configureControllers(controllers);
+Controllers.configure(server);
 server.finalize();
 server.start();

@@ -4,7 +4,7 @@ import { assert, expect } from "chai";
 import request = require("supertest");
 
 // Test objects
-import { HomeController } from "../../web/controllers";
+import { HomeController } from "../../web/controllers/home.controller";
 
 // Dependencies
 import { Server } from "../../web";

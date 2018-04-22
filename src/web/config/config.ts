@@ -46,21 +46,63 @@ class Feature {
     }
 }
 
+class Database {
+    private _username: string;
+    private _password: string;
+    private _url: string;
+    private _port: string;
+    private _databaseName: string;
+
+    public get username(): string {
+        return this._username;
+    }
+
+    public get password(): string {
+        return this.password;
+    }
+
+    public get url(): string {
+        return this._url;
+    }
+
+    public get port(): string {
+        return this._port;
+    }
+
+    public get databaseName(): string {
+        return this._databaseName;
+    }
+
+    public get connectionString(): string {
+        return `mongodb://${this._username}:${this._password}@${this._url}:${this._port}/${this._databaseName}`;
+    }
+
+    constructor(username: string, password: string, url: string, port: string, databaseName: string) {
+        this._username = username;
+        this._password = password;
+        this._url = url;
+        this._port = port;
+        this._databaseName = databaseName;
+    }
+}
+
 export const Features = {
     Api: "ApiEndpoints",
     WebEndpoints: "WebEnpoints"
 }
 
 export class Config {
-    debug: boolean = false;
+    debug: boolean;
     environment: Environment;
     authentication: Authentication;
     viewEngine: ViewEngine;
     features: Feature[];
+    database: Database;
 
     server: Server;
 
     constructor() {
+        this.debug = false;
         this.server = new Server();
         this.authentication = new Authentication();
         this.viewEngine = new ViewEngine();
@@ -68,6 +110,12 @@ export class Config {
             new Feature(Features.Api, true),
             new Feature(Features.WebEndpoints, true)
         ];
+        this.database = new Database(
+            process.env.DB_USERNAME,
+            process.env.DB_PASSWORD,
+            process.env.DB_URL,
+            process.env.DB_PORT,
+            process.env.DB_NAME);
     }
 
     getFeature = (name: string) => {

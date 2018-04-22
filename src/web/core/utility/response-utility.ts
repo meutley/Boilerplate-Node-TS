@@ -3,6 +3,10 @@ import * as express from "express";
 import { HttpStatusCodes } from "../http-status-codes";
 
 export class ResponseUtility {
+    static renderView(response: express.Response, viewName: string, responseBody?: any) {
+        response.render(viewName, responseBody);
+    }
+    
     static ok(response: express.Response, responseBody?: any): express.Response {
         return this.buildResponse(HttpStatusCodes.ok, response, responseBody);
     }

@@ -1,5 +1,4 @@
 import * as express from "express";
-import { MongoClient, Collection } from "mongodb";
 
 import { BaseController } from "./base.controller";
 import { IRouteHandler } from "../core/routing";
@@ -11,22 +10,16 @@ export class HomeController extends BaseController {
         super(name);
     }
 
-    getIndex: IRouteHandler = (request: express.Request, response: express.Response) => {
+    getIndex: IRouteHandler = async (request: express.Request, response: express.Response) => {
         // Get all users then pass them to the view
-        UserService
-            .findAll()
-            .then((users) => {
-                ResponseUtility.renderView(
-                    response,
-                    super.getViewPath("index"),
-                    {
-                        name: request.query.name,
-                        users: users
-                    }
-                );
-            })
-            .catch((err) => {
-                ResponseUtility.serverError(response, err);
-            });
+        const users = await UserService.findAll();
+        ResponseUtility.renderView(
+            response,
+            this.getViewPath("index"),
+            {
+                name: request.query.name,
+                users: users
+            }
+        );
     }
 }

@@ -29,26 +29,22 @@ export class DatabaseCollection {
     }
 }
 
-const collectionHandler = (client: MongoClient, databaseName: string, collectionName: string) => {
+const collectionHandler = async (client: MongoClient, databaseName: string, collectionName: string) => {
     const database = client.db(databaseName);
     const collection = database.collection(collectionName);
     const dbCollection = new DatabaseCollection(client, collection);
     return Promise.resolve(dbCollection);
 }
 
-const withCollectionCall = (connectionString: string, databaseName: string, collectionName: string): Promise<any> => {
-    return MongoClient
-        .connect(connectionString)
-        .then((client) => collectionHandler(client, databaseName, collectionName))
-        .catch((err) => {
-            return Promise.reject(err);
-        });
+const withCollectionCall = async (connectionString: string, databaseName: string, collectionName: string): Promise<any> => {
+    const client = await MongoClient.connect(connectionString);
+    return collectionHandler(client, databaseName, collectionName);
 }
 
 export const DatabaseUtility = {
     withDatabase: (connectionString: string, databaseName: string) => {
         return {
-            withCollection: (collectionName: string): Promise<any> => {
+            withCollection: async (collectionName: string): Promise<any> => {
                 return withCollectionCall(connectionString, databaseName, collectionName);
             }
         };

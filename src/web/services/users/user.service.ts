@@ -4,30 +4,20 @@ import { DatabaseCollection, DatabaseUtility } from "../../core/database/databas
 const connectionString = ApplicationState.config.database.connectionString;
 const databaseName = ApplicationState.config.database.databaseName;
 
-const findAllHandler = (collection: DatabaseCollection) => {
-    return collection
-        .findAll()
-        .then((users) => {
-            collection.close();
-            return Promise.resolve(users);
-        })
-        .catch((err) => {
-            return Promise.reject(err);
-        });
+const findAllHandler = async (collection: DatabaseCollection) => {
+    return collection.findAll();
 }
 
-const dbCall = (handler: any): Promise<any> => {
-    return DatabaseUtility
-            .withDatabase(connectionString, databaseName)
-            .withCollection("users")
-            .then(handler)
-            .catch((err) => {
-                return Promise.reject(err);
-            });
+const dbCall = async (handler: any): Promise<any> => {
+    const collection = await DatabaseUtility
+        .withDatabase(connectionString, databaseName)
+        .withCollection("users");
+    
+    return handler(collection);
 }
 
 export default {
-    findAll: (): Promise<any> => {
+    findAll: async (): Promise<any> => {
         return dbCall(findAllHandler);
     }
 }

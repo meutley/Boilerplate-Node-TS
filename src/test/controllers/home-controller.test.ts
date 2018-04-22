@@ -1,6 +1,7 @@
 import * as express from "express";
 
 import { assert, expect } from "chai";
+import sinon = require("sinon");
 import request = require("supertest");
 
 // Test objects
@@ -12,6 +13,7 @@ import { Utility } from "../../web/core/utility";
 import { ConsoleLogger } from "../../web/core/logger";
 import { ConsoleWriter } from "../../web/core/abstraction";
 import { RouteConfigService } from "../../web/core/routing/route-config-service";
+import { UserService } from "../../web/services/users";
 
 // Build test objects
 const config = Utility.Config.getConfig("Debug");
@@ -34,6 +36,17 @@ before(() => {
 });
 
 describe("HomeController", () => {
+    var sandbox: sinon.SinonSandbox;
+    
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+        sandbox.stub(UserService, "findAll").returns(Promise.resolve([]));
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+    
     it("should return 200 and render Home/Index HTML when GET /", (done) => {
         request(server.ExpressApp)
             .get(EmptyPath)
@@ -43,6 +56,25 @@ describe("HomeController", () => {
 
                 assert.isDefined(res.text);
                 assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
+
+                done();
+            });
+    });
+
+    it("should return 200 and render Home/Index HTML with user count when GET /", (done) => {
+        sandbox.restore();
+        sandbox.stub(UserService, "findAll").returns(Promise.resolve([{}]));
+        
+        request(server.ExpressApp)
+            .get(EmptyPath)
+            .expect(200)
+            .end((err, res) => {
+                if (err) throw err;
+
+                console.log(res.text);
+                assert.isDefined(res.text);
+                assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
+                assert.isTrue(res.text.indexOf("<strong>User count:</strong> 1") >= 0);
 
                 done();
             });

@@ -46,6 +46,7 @@ describe("HomeController", () => {
 
                 assert.isDefined(res.text);
                 assert.isTrue(res.text.indexOf("<h1>Home - No Name</h1>") >= 0);
+                assert.isTrue(res.text.indexOf("<strong>User count:</strong> 0") >= 0);
 
                 done();
             });

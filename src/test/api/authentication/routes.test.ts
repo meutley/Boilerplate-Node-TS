@@ -3,7 +3,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 
 import { assert, expect } from "chai";
-import request = require("supertest");
+import * as request from "supertest";
 
 // Test objects
 import { Router } from "../../../web/api/authentication/router";

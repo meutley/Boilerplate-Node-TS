@@ -1,8 +1,8 @@
 import * as express from "express";
 
 import { assert, expect } from "chai";
-import sinon = require("sinon");
-import request = require("supertest");
+import * as sinon from "sinon";
+import * as request from "supertest";
 
 // Test objects
 import * as TestUtility from "./test-utility";

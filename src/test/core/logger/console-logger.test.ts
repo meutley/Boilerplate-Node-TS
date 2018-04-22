@@ -1,5 +1,4 @@
-import sinon = require("sinon");
-import { SinonStub } from "sinon";
+import * as sinon from "sinon";
 import { assert } from "chai";
 
 import { Config } from "../../../web/config";

@@ -39,12 +39,19 @@ export class Server {
     configureApiRouter(router: RouteConfig) {
         if (this._config.getFeature(Features.Api).isEnabled === true) {
             this._routeConfigService.configureRouter(this._app, router);
+            this._logger.debug(`Registered an API router: ${router.mountPath}`);
         }
     }
 
     configureApiRouters(routers: RouteConfig[]) {
         if (this._config.getFeature(Features.Api).isEnabled === true) {
             this._routeConfigService.configureRouters(this._app, routers);
+
+            if (this._config.debug === true) {
+                _.forEach(routers, (r: RouteConfig) => {
+                    this._logger.debug(`Registered an API router: ${r.mountPath}`);
+                });
+            }
         }
     }
 
@@ -55,6 +62,7 @@ export class Server {
                 throw new Error(`A controller with the name ${controller.controllerName} has already been registered`);
             } else {
                 this._controllers.push(controller);
+                this._logger.debug(`Registered a controller: ${controller.controllerName}`);
             }
         }
     }
@@ -82,6 +90,9 @@ export class Server {
     private configureViewEngine() {
         this._app.set("views", path.join(__dirname, this._config.viewEngine.rootPath));
         this._app.set("view engine", this._config.viewEngine.name);
+
+        this._logger.debug(`Views path: ${this._config.viewEngine.rootPath}`);
+        this._logger.debug(`View engine: ${this._config.viewEngine.name}`);
     }
 
     private configureMiddleware() {

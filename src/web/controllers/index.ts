@@ -5,5 +5,5 @@ import { HomeController } from "./home.controller";
 
 export const configure = (server: Server) => {
     // Configure controllers here
-    server.configureController(new HomeController(server.ExpressApp, "Home"));
+    server.configureController(new HomeController("Home"));
 }

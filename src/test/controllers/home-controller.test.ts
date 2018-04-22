@@ -29,7 +29,7 @@ const NotFoundPath = "/home/not-found";
 
 before(() => {
     server = new Server(config, logger, routeConfigService);
-    server.configureController(new HomeController(server.ExpressApp, "Home"));
+    server.configureController(new HomeController("Home"));
     server.finalize();
 });
 

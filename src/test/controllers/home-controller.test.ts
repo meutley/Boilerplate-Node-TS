@@ -5,34 +5,24 @@ import sinon = require("sinon");
 import request = require("supertest");
 
 // Test objects
+import * as TestUtility from "./test-utility";
 import { HomeController } from "../../web/controllers/home.controller";
 
 // Dependencies
 import { Server } from "../../web";
-import { Utility } from "../../web/core/utility";
-import { ConsoleLogger } from "../../web/core/logger";
-import { ConsoleWriter } from "../../web/core/abstraction";
-import { RouteConfigService } from "../../web/core/routing/route-config-service";
 import { UserService } from "../../web/services/users";
 
-// Build test objects
-const config = Utility.Config.getConfig("Debug");
-const consoleWriter = new ConsoleWriter();
-const logger = new ConsoleLogger(consoleWriter, config);
-const routeConfigService = new RouteConfigService();
-let server: Server;
-
-// Constants
+// Test constants
 const EmptyPath = "/";
 const EmptyPathWithQuery = "/?name=TEST+NAME";
 const HomePath = "/home";
 const HomeIndexPath = "/home/index";
 const NotFoundPath = "/home/not-found";
 
+let server: Server;
+
 before(() => {
-    server = new Server(config, logger, routeConfigService);
-    server.configureController(new HomeController("Home"));
-    server.finalize();
+    server = TestUtility.configureServer(new HomeController("Home"));
 });
 
 describe("HomeController", () => {

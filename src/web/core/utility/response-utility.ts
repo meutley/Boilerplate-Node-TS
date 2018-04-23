@@ -6,6 +6,11 @@ export class ResponseUtility {
     static renderView(response: express.Response, viewName: string, responseBody?: any) {
         response.render(viewName, responseBody);
     }
+
+    static renderViewWithStatus(response: express.Response, status: number, viewName: string, responseBody?: any) {
+        response.status(status);
+        this.renderView(response, viewName, responseBody);
+    }
     
     static ok(response: express.Response, responseBody?: any): express.Response {
         return this.buildResponse(HttpStatusCodes.ok, response, responseBody);

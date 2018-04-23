@@ -29,12 +29,13 @@ const invokeControllerAction =
     (controller: BaseController,
     action: string,
     request: express.Request,
-    response: express.Response) => {
+    response: express.Response,
+    next?: any) => {
         if (controller) {
             // Invoke the controller action; return not found if it does not exist
             const controllerMethod = findControllerAction(request, controller, action);
             if (controllerMethod) {
-                controllerMethod.call(controller, request, response);
+                controllerMethod.call(controller, request, response, next);
             } else {
                 ResponseUtility.notFound(response);
             }
@@ -44,12 +45,12 @@ const invokeControllerAction =
 }
 
 export const configureDefaultRouteHandler = (app: express.Application, controllers: BaseController[]) => {
-    app.use("/:controller?/:action?", (request: express.Request, response: express.Response) => {
+    app.use("/:controller?/:action?", (request: express.Request, response: express.Response, next?: any) => {
         const params = request.params;
         const controllerName = params.controller || defaultController;
         const actionName = params.action || defaultAction;
 
         const controller = findController(controllerName, controllers);
-        invokeControllerAction(controller, actionName, request, response);
+        invokeControllerAction(controller, actionName, request, response, next);
     });
 }

@@ -4,7 +4,7 @@ import { DatabaseCollection, DatabaseUtility } from "../../core/database/databas
 const connectionString = ApplicationState.config.database.connectionString;
 const databaseName = ApplicationState.config.database.databaseName;
 
-const findAllHandler = async (collection: DatabaseCollection) => {
+const findAllHandler = (collection: DatabaseCollection): Promise<any> => {
     return collection.findAll();
 }
 
@@ -17,7 +17,7 @@ const dbCall = async (handler: any): Promise<any> => {
 }
 
 export default {
-    findAll: async (): Promise<any> => {
+    findAll: (): Promise<any> => {
         return dbCall(findAllHandler);
     }
 }

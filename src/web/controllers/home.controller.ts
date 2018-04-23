@@ -10,16 +10,23 @@ export class HomeController extends BaseController {
         super(name);
     }
 
-    getIndex: IRouteHandler = async (request: express.Request, response: express.Response) => {
+    getIndex: IRouteHandler = async (request: express.Request, response: express.Response, next?: any) => {
         // Get all users then pass them to the view
-        const users = await UserService.findAll();
-        ResponseUtility.renderView(
-            response,
-            this.getViewPath("index"),
-            {
-                name: request.query.name,
-                users: users
-            }
-        );
+        try {
+            const users = await UserService
+                .findAll()
+                .catch(err => { throw err; });
+
+            ResponseUtility.renderView(
+                response,
+                this.getViewPath("index"),
+                {
+                    name: request.query.name,
+                    users: users
+                }
+            );
+        } catch (err) {
+            next(err);
+        }
     }
 }

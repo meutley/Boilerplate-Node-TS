@@ -1,16 +1,16 @@
 import * as _ from "lodash";
 import * as path from "path";
 import * as express from "express";
-import * as bodyParser from "body-parser";
 
 import { ApplicationState } from "./application-state";
+import { BaseController } from "./controllers/base.controller";
 import { Config, Features } from "./config";
 import { ILogger } from "./core/logger";
 import { IRouteConfigService, RouteConfig } from "./core/routing";
-import { Utility } from "./core/utility";
-import { BaseController } from "./controllers/base.controller";
 import { ResponseUtility } from "./core/utility/response-utility";
+import { Utility } from "./core/utility";
 import * as DefaultRouteHandler from "./default-route-handler";
+import * as Middleware from "./middleware";
 
 export class Server {
     private _app: express.Application = null;
@@ -31,9 +31,10 @@ export class Server {
         this._controllers = [];
 
         ApplicationState.config = this._config;
+        ApplicationState.logger = this._logger;
 
         this.configureViewEngine();
-        this.configureMiddleware();
+        Middleware.configure(this._app);
     }
 
     configureApiRouter(router: RouteConfig) {
@@ -79,6 +80,8 @@ export class Server {
         if (this._config.getFeature(Features.WebEndpoints).isEnabled === true) {
             DefaultRouteHandler.configureDefaultRouteHandler(this._app, this._controllers);
         }
+
+        Middleware.configureErrorHandling(this._app);
     }
     
     start() {
@@ -93,11 +96,6 @@ export class Server {
 
         this._logger.debug(`Views path: ${this._config.viewEngine.rootPath}`);
         this._logger.debug(`View engine: ${this._config.viewEngine.name}`);
-    }
-
-    private configureMiddleware() {
-        this._app.use(bodyParser.urlencoded({ extended: false }));
-        this._app.use(bodyParser.json());
     }
 
     private onStarted() {

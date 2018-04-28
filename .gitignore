@@ -60,3 +60,6 @@ typings/
 # Build files
 dist/
 
+# Shell scripts
+run-docker.sh
+

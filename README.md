@@ -38,6 +38,8 @@ To run the unit tests: `npm run test`. BAM!
    * See `run-docker.sh` for a shell script example
 4. To stop (if it's running), (re-)build, then start the container: `./docker/build-and-run.sh`
 
+**Note**: You will also need to allow the shell scripts to be executed: `chmod +x ./docker/*.sh`
+
 **Note**: The `ENVIRONMENT_NAME` environment variable can be one of the following: `Local, Debug, QA, Production`
 
 ## Adding An MVC Style Controller / View

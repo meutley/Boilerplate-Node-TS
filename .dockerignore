@@ -3,4 +3,4 @@ node_modules
 npm-debug.log
 
 # Shell scripts
-run-docker.sh
+docker/

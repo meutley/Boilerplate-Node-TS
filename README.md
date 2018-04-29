@@ -29,6 +29,17 @@ It's simple: run `npm install`, then `npm run watch-dev`. Point your browser to 
 
 To run the unit tests: `npm run test`. BAM!
 
+## Running in a Docker container
+
+1. Build the container: `./docker/build-container.sh`
+2. Rename `./docker/run-docker.sample.sh` to `run-docker.sh` and change `-e` environment parameters accordingly
+3. Run the container: `./docker/run-docker.sh`
+   * You can use the `-e` flag to pass in the appropriate environment variables: `ENVIRONMENT_NAME`, `DB_NAME`, `DB_PASSWORD`, `DB_PORT`, `DB_URL`, and `DB_USERNAME`
+   * See `run-docker.sh` for a shell script example
+4. To stop (if it's running), (re-)build, then start the container: `./docker/build-and-run.sh`
+
+**Note**: The `ENVIRONMENT_NAME` environment variable can be one of the following: `Local, Debug, QA, Production`
+
 ## Adding An MVC Style Controller / View
 
 1. Create a `{name}.controller.ts` file in `src/web/controllers`

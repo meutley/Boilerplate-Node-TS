@@ -1,7 +1,5 @@
 # Variables
-PSIDPATTERN='^([0-9a-z]*)(?=        boilerplate-node-ts)'
-PSIDCMD=`docker ps | grep -oP "$PSIDPATTERN"`
-PSID=`echo $PSIDCMD`
+PSID=$(./docker/get-container-id.sh)
 
 # Stop the container if it is running
 if [ "$PSID" != "" ]; then

@@ -28,6 +28,9 @@ const routeConfigService = new RouteConfigService();
 // config.disableFeature(Features.Api);
 // config.disableFeature(Features.WebEndpoints);
 
+logger.info(`Environment name: ${process.env.ENVIRONMENT_NAME}`);
+logger.info("Starting Web server...");
+
 // Initialize and start the server
 const server = new Web.Server(config, logger, routeConfigService);
 Api.configure(server);
